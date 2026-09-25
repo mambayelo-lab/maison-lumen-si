@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Maison Lumen synthetic supply-chain information system for Aura." />
+  <title>Maison Lumen · Integration Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Maison Lumen home"><span class="brand-mark">L</span><span>Maison Lumen</span></a>
+    <div class="top-meta"><span class="live-dot"></span> Synthetic systems online <span class="pill">Aura Integration Lab</span></div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">SUPPLY CHAIN DIGITAL TWIN</p>
+        <h1>A living information system<br/><em>Aura can interrogate.</em></h1>
+        <p class="lede">Explore six realistic enterprise applications, their contracts, demo connection profiles and operational data. Trigger resilient decisions from evidence—not dashboards alone.</p>
+        <div class="hero-actions"><a class="button primary" href="#applications">Explore applications</a><a class="button secondary" href="/api/catalog" target="_blank">Open API catalogue ↗</a></div>
+      </div>
+      <aside class="signal-card">
+        <div class="signal-head"><span>Live decision signals</span><span id="updated-at">Loading…</span></div>
+        <div id="signals" class="signals"></div>
+      </aside>
+    </section>
+
+    <section class="metrics" aria-label="System overview">
+      <article><strong>6</strong><span>applications</span></article>
+      <article><strong>3</strong><span>integration modes</span></article>
+      <article><strong>7</strong><span>business objects</span></article>
+      <article><strong>100%</strong><span>synthetic data</span></article>
+    </section>
+
+    <section class="section" id="applications">
+      <div class="section-title"><div><p class="eyebrow">APPLICATION LANDSCAPE</p><h2>Choose a source. Inspect its truth.</h2></div><p>Each profile emulates a familiar market category without embedding or impersonating the vendor product.</p></div>
+      <div id="app-tabs" class="app-tabs" role="tablist"></div>
+      <div class="workspace">
+        <section id="app-detail" class="app-detail" aria-live="polite"></section>
+        <aside class="connection-panel">
+          <div class="panel-label">CONNECTION PROFILE</div>
+          <div id="credentials"></div>
+          <div class="demo-warning"><strong>Demo credentials only.</strong><br/>These values are deliberately non-sensitive and cannot access a real vendor system.</div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section ontology-section">
+      <div class="section-title"><div><p class="eyebrow">MINIMAL ONTOLOGY</p><h2>One business language across fragmented systems.</h2></div><a href="/api/ontology" target="_blank">JSON contract ↗</a></div>
+      <div id="ontology" class="ontology"></div>
+    </section>
+
+    <section class="section flow-section">
+      <p class="eyebrow">FROM SIGNAL TO DECISION</p>
+      <h2>Aura does not replace operational systems.<br/>It turns their evidence into a governed decision.</h2>
+      <div class="flow">
+        <div><span>01</span><strong>Observe</strong><small>APIs · events · files</small></div><i>→</i>
+        <div><span>02</span><strong>Understand</strong><small>Ontology · quality · lineage</small></div><i>→</i>
+        <div><span>03</span><strong>Detect</strong><small>Causal rules · alerts</small></div><i>→</i>
+        <div class="accent"><span>04</span><strong>Decide</strong><small>BORA · evidence · traceability</small></div>
+      </div>
+    </section>
+  </main>
+
+  <footer><span>Maison Lumen · Synthetic demonstration environment</span><span>Built for Aura Supply Chain Resilience</span></footer>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

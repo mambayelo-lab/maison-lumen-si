@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Start Maison Lumen and test
+        run: |
+          npm start > /tmp/maison-lumen.log 2>&1 &
+          lumen_pid=$!
+          trap 'kill $lumen_pid 2>/dev/null || true' EXIT
+          for i in $(seq 1 30); do
+            curl -fsS http://127.0.0.1:4191/health && break
+            sleep 1
+          done
+          npm test
+          npm run demo

@@ -1,0 +1,8 @@
+services:
+  event-broker: { image: node:22-alpine, working_dir: /app, volumes: [".:/app"], command: ["node", "services/event-broker.mjs"], network_mode: host }
+  erp: { image: node:22-alpine, working_dir: /app, volumes: [".:/app"], command: ["node", "services/erp.mjs"], network_mode: host, depends_on: [event-broker] }
+  wms: { image: node:22-alpine, working_dir: /app, volumes: [".:/app"], command: ["node", "services/wms.mjs"], network_mode: host, depends_on: [event-broker] }
+  tms: { image: node:22-alpine, working_dir: /app, volumes: [".:/app"], command: ["node", "services/tms.mjs"], network_mode: host, depends_on: [event-broker] }
+  supplier-risk: { image: node:22-alpine, working_dir: /app, volumes: [".:/app"], command: ["node", "services/supplier-risk.mjs"], network_mode: host, depends_on: [event-broker] }
+  file-hub: { image: node:22-alpine, working_dir: /app, volumes: [".:/app"], command: ["node", "services/file-hub.mjs"], network_mode: host }
+  aura-gateway: { image: node:22-alpine, working_dir: /app, volumes: [".:/app"], command: ["node", "services/aura-gateway.mjs"], network_mode: host, depends_on: [erp, wms, tms, supplier-risk, file-hub] }

@@ -2,6 +2,10 @@
 
 Executable demonstration information system for **Aura Supply Chain Resilience Agent**.
 
+The repository also includes a Vercel-ready web portal. It exposes six synthetic, market-familiar application profiles, their non-sensitive demo connection parameters, sample datasets, ontology and resilience alerts.
+
+> Vendor names describe the integration pattern being emulated. This project is not affiliated with, endorsed by, or connected to SAP, Manhattan Associates, Blue Yonder, Coupa, Snowflake or MuleSoft.
+
 It simulates a mid-size luxury retailer/manufacturer with multiple applications, three exchange styles and an Aura-facing semantic gateway. The data is synthetic.
 
 ## Applications

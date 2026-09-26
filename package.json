@@ -1,12 +1,13 @@
 {
   "name": "maison-lumen-si",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "type": "module",
   "description": "Executable multi-application information system used to demonstrate Aura Supply Chain Resilience.",
   "scripts": {
     "start": "node scripts/start.mjs",
     "test": "node scripts/smoke-test.mjs && node scripts/test-vercel-api.mjs",
+    "test:api": "node scripts/test-vercel-api.mjs",
     "demo": "node scripts/demo-scenario.mjs"
   },
   "engines": { "node": ">=20" }

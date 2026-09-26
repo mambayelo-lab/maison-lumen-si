@@ -25,7 +25,9 @@ async function sourceHeaders(id) {
   if (id === "manhattan-wms") return { "X-API-Key": "lumen_wms_demo_key" };
   if (id === "coupa-risk") return { Authorization: "Bearer lumen_demo_bearer_token" };
   if (id === "snowflake-demand") return { Authorization: "Bearer DEMO-KEY-NOT-USABLE", "X-Lumen-Account": "lumen-demo.eu-west", "X-Lumen-Warehouse": "AURA_DEMO_WH", "X-Lumen-Role": "AURA_READER" };
-  if (id === "mulesoft-events") return { "X-Client-Id": "aura-demo-client", "X-Client-Secret": "DEMO-ONLY" };
+  if (id === "mulesoft-events" || id === "kafka-stream" || id === "webhook-gateway") return { "X-Client-Id": "aura-demo-client", "X-Client-Secret": "DEMO-ONLY" };
+  if (id === "rest-order-management") return { Authorization: "Bearer lumen_rest_demo_token" };
+  if (id === "legacy-soap") return { Authorization: `Basic ${btoa("aura_demo:LUMEN-DEMO-ONLY")}`, "X-Lumen-Tenant": "lumen-fr-100" };
   if (id === "blueyonder-tms") {
     if (!state.tmsToken) {
       const body = new URLSearchParams({ grant_type: "client_credentials", client_id: "aura-lumen-demo", client_secret: "DEMO-NOT-A-SECRET" });

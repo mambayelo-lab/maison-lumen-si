@@ -1,4 +1,5 @@
 const state = { applications: [], active: null, tmsToken: null };
+const ADMIN_TOKEN_KEY = "lumen-admin-token";
 
 const DEMO_ACCESS = {
   "sap-s4": { display: { type: "Basic Auth", username: "aura_demo", password: "LUMEN-DEMO-ONLY", tenant: "lumen-fr-100" } },
@@ -55,6 +56,39 @@ function renderTable(records) {
   return `<div class="table-wrap"><table><thead><tr>${keys.map(key => `<th>${key}</th>`).join("")}</tr></thead><tbody>${records.map(record => `<tr>${keys.map(key => `<td>${clean(record[key])}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
 }
 
+function renderEditor(records) {
+  return `<div class="editor-panel">
+    <div class="editor-head"><strong>Modifier les valeurs fictives</strong><span>PATCH persistant · les prochaines lectures Aura les verront</span></div>
+    <textarea id="records-editor" spellcheck="false">${JSON.stringify(records, null, 2)}</textarea>
+    <div class="editor-actions"><input id="admin-token" type="password" placeholder="Token d’administration (démo)" value="${sessionStorage.getItem(ADMIN_TOKEN_KEY) || ""}"/><button class="button primary" id="save-records">Enregistrer</button><span id="save-status"></span></div>
+  </div>`;
+}
+
+async function saveRecords() {
+  const status = document.querySelector("#save-status");
+  try {
+    const records = JSON.parse(document.querySelector("#records-editor").value);
+    const token = document.querySelector("#admin-token").value.trim();
+    if (!token) throw new Error("Token d’administration requis");
+    sessionStorage.setItem(ADMIN_TOKEN_KEY, token);
+    const saved = await getJson(`/api/data/${state.active}`, { method: "PATCH", headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }, body: JSON.stringify({ records }) });
+    status.textContent = `Enregistré · ${saved.records.length} lignes · ${saved.persistence}`;
+    await selectApplication(state.active);
+    await refreshSignals();
+  } catch (error) {
+    status.textContent = `Échec : ${clean(error.message)}`;
+  }
+}
+
+async function refreshSignals() {
+  try {
+    const alerts = await getJson("/api/alerts", { headers: { Authorization: "Bearer lumen_aura_gateway_demo_token" } });
+    renderSignals(alerts.alerts, alerts.generatedAt);
+  } catch (error) {
+    document.querySelector("#signals").innerHTML = `<p>Alertes indisponibles · ${clean(error.message)}</p>`;
+  }
+}
+
 async function selectApplication(id) {
   state.active = id;
   document.querySelectorAll(".app-tab").forEach(tab => tab.classList.toggle("active", tab.dataset.id === id));
@@ -66,8 +100,10 @@ async function selectApplication(id) {
       <div class="app-heading"><div><p class="eyebrow">${clean(app.marketReference)}-INSPIRED</p><h3>${clean(app.name)}</h3><p>${clean(app.role)}</p></div><span class="status">● ${clean(app.status)}</span></div>
       <div class="contract"><span>${clean(app.protocol)}</span><span>${clean(entity)}</span><span>${records.length} sample records</span><span>request ${clean(lineage?.requestId).slice(0, 8)}</span></div>
       ${renderTable(records)}
+      ${renderEditor(records)}
       <p style="color:#7c8097;font-size:12px;margin-top:18px">${clean(app.disclaimer)}</p>`;
     renderCredentials(app);
+    document.querySelector("#save-records").addEventListener("click", saveRecords);
   } catch (error) {
     document.querySelector("#app-detail").innerHTML = `<h3>Authenticated source read failed</h3><p>${clean(error.message)}</p>`;
   }

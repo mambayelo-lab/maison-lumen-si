@@ -16,11 +16,15 @@ export default function handler(request, response) {
       "/api/alerts": { get: { summary: "Read deterministic resilience alerts", security: [{ bearerAuth: [] }] } },
       "/api/events": { get: { summary: "Read a cursor-based CloudEvents 1.0 batch", security: [{ clientHeaders: [] }] } },
       "/api/files/{name}": { get: { summary: "Read a governed CSV export", security: [{ apiKeyAuth: [] }] } },
+      "/api/kafka": { get: { summary: "Consume a Kafka-compatible topic over HTTP", security: [{ clientHeaders: [] }] }, post: { summary: "Publish a Kafka-compatible message over HTTP", security: [{ clientHeaders: [] }] } },
+      "/api/soap": { get: { summary: "Discover the SOAP WSDL" }, post: { summary: "Invoke GetPurchaseOrders over SOAP 1.1", security: [{ basicAuth: [] }] } },
+      "/api/webhooks": { get: { summary: "Read persisted webhook deliveries", security: [{ clientHeaders: [] }] }, post: { summary: "Receive and persist a webhook delivery", security: [{ clientHeaders: [] }] } },
     },
     components: { securitySchemes: {
       bearerAuth: { type: "http", scheme: "bearer" },
       apiKeyAuth: { type: "apiKey", in: "header", name: "X-API-Key" },
       clientHeaders: { type: "apiKey", in: "header", name: "X-Client-Id", description: "Also requires X-Client-Secret." },
+      basicAuth: { type: "http", scheme: "basic" },
     } },
   });
 }

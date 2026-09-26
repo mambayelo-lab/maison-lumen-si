@@ -4,22 +4,37 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   smoke-test:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 22
+          cache: npm
       - name: Start Maison Lumen and test
+        shell: bash
         run: |
+          set -euo pipefail
           npm start > /tmp/maison-lumen.log 2>&1 &
           lumen_pid=$!
           trap 'kill $lumen_pid 2>/dev/null || true' EXIT
-          for i in $(seq 1 30); do
-            curl -fsS http://127.0.0.1:4191/health && break
+          ready=0
+          for _ in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4191/health; then
+              ready=1
+              break
+            fi
             sleep 1
           done
+          if [ "$ready" -ne 1 ]; then
+            cat /tmp/maison-lumen.log
+            exit 1
+          fi
           npm test
           npm run demo

@@ -10,5 +10,5 @@
     "test:api": "node scripts/test-vercel-api.mjs",
     "demo": "node scripts/demo-scenario.mjs"
   },
-  "engines": { "node": ">=20" }
+  "engines": { "node": ">=22" }
 }

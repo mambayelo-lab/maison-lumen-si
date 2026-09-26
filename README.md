@@ -53,7 +53,7 @@ Available files: `demand-forecast.csv` and `supplier-scorecard.csv`.
 
 ## Local microservice demonstrator
 
-Node.js 20+ is required and no external package is needed.
+Node.js 22+ is required and no external package is needed.
 
 ```bash
 npm start
